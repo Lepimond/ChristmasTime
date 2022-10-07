@@ -16,5 +16,7 @@ public class ChristmasTime {
         IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
         MinecraftForge.EVENT_BUS.register(this);
+
+        LOGGER.debug("Christmas Time welcomes you!");
     }
 }
