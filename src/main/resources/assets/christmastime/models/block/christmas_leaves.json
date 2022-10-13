@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/spruce_leaves",
+  "textures": {
+    "all": "christmastime:block/christmas_leaves"
+  }
+}
