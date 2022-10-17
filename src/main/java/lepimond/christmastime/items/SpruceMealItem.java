@@ -59,8 +59,24 @@ public class SpruceMealItem extends BoneMealItem {
 
         int height = MIN_HEIGHT + rand.nextInt(MAX_HEIGHT - MIN_HEIGHT);
 
+        //Doesn't let trees to grow above roof
+        for (int i = 1; i < height; i++) {
+            BlockPos potentialTreePos = new BlockPos(x, y + i, z);
+            Block potentialTreeBlock = level.getBlockState(potentialTreePos).getBlock();
+
+            if (potentialTreeBlock != Blocks.AIR && !(potentialTreeBlock instanceof LeavesBlock)) {
+                height = i;
+                if (height < MIN_HEIGHT)
+                    return;
+
+                break;
+            }
+        }
+
+        //Main trunk (vertical)
         placeBranch(x, y, z, DIR_Y_PLUS, height, level);
 
+        //Cover of the tree
         placeLeaves(x, y + height, z, level);
         placeLeaves(x + 1, y + height, z, level);
         placeLeaves(x - 1, y + height, z, level);
@@ -68,6 +84,7 @@ public class SpruceMealItem extends BoneMealItem {
         placeLeaves(x, y + height, z - 1, level);
         placeLeaves(x, y + height + 1, z, level);
 
+        //Horizontal branches
         for (int i = 0; i < height / 3; i++) {
             placeBranchWithLeaves(x + 1, y + height / 3 + i * 3, z, DIR_X_PLUS, height * 2 / 9 - i, level);
             placeBranchWithLeaves(x - 1, y + height / 3 + i * 3, z, DIR_X_MINUS, height * 2 / 9 - i, level);
@@ -179,42 +196,23 @@ public class SpruceMealItem extends BoneMealItem {
         }
     }
 
-    private void placeNineLogs(int x, int y, int z, Level level) {
-        placeBlock(Blocks.SPRUCE_LOG,    x,     y,   z, level);
-        placeBlock(Blocks.SPRUCE_LOG, x + 1, y,   z, level);
-        placeBlock(Blocks.SPRUCE_LOG,    x,     y,z + 1, level);
-        placeBlock(Blocks.SPRUCE_LOG, x - 1, y,   z, level);
-        placeBlock(Blocks.SPRUCE_LOG,    x,     y,z - 1, level);
-        placeBlock(Blocks.SPRUCE_LOG, x + 1, y,z + 1, level);
-        placeBlock(Blocks.SPRUCE_LOG, x + 1, y,z - 1, level);
-        placeBlock(Blocks.SPRUCE_LOG, x - 1, y,z + 1, level);
-        placeBlock(Blocks.SPRUCE_LOG, x - 1, y,z - 1, level);
-    }
-
-    private void placeLeavesCircle(int x, int y, int z, int radius, boolean ignoreLogs, Level level) {
-        LeavesBlock leaves = (LeavesBlock) ChristmasBlocks.christmasLeaves.get();
-
-        for (int i = 0; i < radius; i++) {
-            for (int j = 0; j < radius; j++) {
-                if (i < 2 && j < 2 && !ignoreLogs)
-                    continue;
-
-                if (Math.sqrt(i*i + j * j) < radius) {
-                    placeBlock(leaves, x + i, y, z + j, level);
-                    placeBlock(leaves, x + i, y, z - j, level);
-                    placeBlock(leaves, x - i, y, z + j, level);
-                    placeBlock(leaves, x - i, y, z - j, level);
-                }
-            }
-        }
-    }
-
     private void placeLeaves(int x, int y, int z, Level level) {
         BlockPos pos = new BlockPos(x, y, z);
+
+        Block leavesPlaceBlock = level.getBlockState(pos).getBlock();
+        if (leavesPlaceBlock != Blocks.AIR)
+            return;
+
         level.setBlock(pos, nonDecayingState, 19);
     }
 
     private void placeLog(Block block, int x, int y, int z, int direction, Level level) {
+        BlockPos pos = new BlockPos(x, y, z);
+
+        Block logPlaceBlock = level.getBlockState(pos).getBlock();
+        if (logPlaceBlock != Blocks.AIR && !(logPlaceBlock instanceof LeavesBlock) && !(logPlaceBlock instanceof SaplingBlock))
+            return;
+
         Direction.Axis axis;
 
         if (direction == DIR_X_PLUS || direction == DIR_X_MINUS) {
@@ -225,7 +223,6 @@ public class SpruceMealItem extends BoneMealItem {
             axis = Direction.Axis.Z;
         }
 
-        BlockPos pos = new BlockPos(x, y, z);
         level.setBlock(pos, block.defaultBlockState().setValue(BlockStateProperties.AXIS, axis), 19);
     }
 
