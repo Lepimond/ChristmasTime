@@ -94,7 +94,43 @@ public class SpruceMealItem extends BoneMealItem {
     }
 
     private void placeBranch(int x, int y, int z, int direction, int length, Level level) {
-        for (int i = 0; i < length; i++) {
+        int branchLength = length;
+
+        for (int i = 0; i < branchLength; i++) {
+            int currentX = x;
+            int currentY = y;
+            int currentZ = z;
+
+            switch (direction) {
+                case DIR_X_MINUS:
+                    currentX -= i;
+                    break;
+                case DIR_X_PLUS:
+                    currentX += i;
+                    break;
+                case DIR_Y_MINUS:
+                    currentY -= i;
+                    break;
+                case DIR_Y_PLUS:
+                    currentY += i;
+                    break;
+                case DIR_Z_MINUS:
+                    currentZ -= i;
+                    break;
+                case DIR_Z_PLUS:
+                    currentZ += i;
+                    break;
+            }
+
+            BlockPos potentialBranchBos = new BlockPos(currentX, currentY, currentZ);
+            Block potentialBranchBlock = level.getBlockState(potentialBranchBos).getBlock();
+
+            if (potentialBranchBlock != Blocks.AIR && !(potentialBranchBlock instanceof LeavesBlock) && !(potentialBranchBlock instanceof SaplingBlock)) {
+                branchLength = i;
+            }
+        }
+
+        for (int i = 0; i < branchLength; i++) {
             int currentX = x;
             int currentY = y;
             int currentZ = z;
@@ -125,10 +161,46 @@ public class SpruceMealItem extends BoneMealItem {
     }
 
     private void placeBranchWithLeaves(int x, int y, int z, int direction, int length, Level level) {
-        if (length < 0)
+        int branchLength = length;
+
+        for (int i = 0; i < branchLength; i++) {
+            int currentX = x;
+            int currentY = y;
+            int currentZ = z;
+
+            switch (direction) {
+                case DIR_X_MINUS:
+                    currentX -= i;
+                    break;
+                case DIR_X_PLUS:
+                    currentX += i;
+                    break;
+                case DIR_Y_MINUS:
+                    currentY -= i;
+                    break;
+                case DIR_Y_PLUS:
+                    currentY += i;
+                    break;
+                case DIR_Z_MINUS:
+                    currentZ -= i;
+                    break;
+                case DIR_Z_PLUS:
+                    currentZ += i;
+                    break;
+            }
+
+            BlockPos potentialBranchBos = new BlockPos(currentX, currentY, currentZ);
+            Block potentialBranchBlock = level.getBlockState(potentialBranchBos).getBlock();
+
+            if (potentialBranchBlock != Blocks.AIR && !(potentialBranchBlock instanceof LeavesBlock) && !(potentialBranchBlock instanceof SaplingBlock)) {
+                branchLength = i;
+            }
+        }
+
+        if (branchLength <= 0)
             return;
 
-        for (int i = 0; i < length; i++) {
+        for (int i = 0; i < branchLength; i++) {
             int currentX = x;
             int currentY = y;
             int currentZ = z;
@@ -176,22 +248,22 @@ public class SpruceMealItem extends BoneMealItem {
 
         switch (direction) {
             case DIR_X_MINUS:
-                placeLeaves(x - length, y, z, level);
+                placeLeaves(x - branchLength, y, z, level);
                 break;
             case DIR_X_PLUS:
-                placeLeaves(x + length, y, z, level);
+                placeLeaves(x + branchLength, y, z, level);
                 break;
             case DIR_Y_MINUS:
-                placeLeaves(x, y - length, z, level);
+                placeLeaves(x, y - branchLength, z, level);
                 break;
             case DIR_Y_PLUS:
-                placeLeaves(x, y + length, z, level);
+                placeLeaves(x, y + branchLength, z, level);
                 break;
             case DIR_Z_MINUS:
-                placeLeaves(x, y, z - length, level);
+                placeLeaves(x, y, z - branchLength, level);
                 break;
             case DIR_Z_PLUS:
-                placeLeaves(x, y, z + length, level);
+                placeLeaves(x, y, z + branchLength, level);
                 break;
         }
     }
