@@ -85,11 +85,22 @@ public class SpruceMealItem extends BoneMealItem {
         placeLeaves(x, y + height + 1, z, level);
 
         //Horizontal branches
+        int initialBranchLength = height * 2 / 9;
         for (int i = 0; i < height / 3; i++) {
-            placeBranchWithLeaves(x + 1, y + height / 3 + i * 3, z, DIR_X_PLUS, height * 2 / 9 - i, level);
-            placeBranchWithLeaves(x - 1, y + height / 3 + i * 3, z, DIR_X_MINUS, height * 2 / 9 - i, level);
-            placeBranchWithLeaves(x, y + height / 3 + i * 3,z + 1, DIR_Z_PLUS, height * 2 / 9 - i, level);
-            placeBranchWithLeaves(x, y + height / 3 + i * 3,z - 1, DIR_Z_MINUS, height * 2 / 9 - i, level);
+            int branchHeight = y + height / 3 + i * 3;
+
+            placeBranchWithLeaves(x + 1, branchHeight, z, DIR_X_PLUS, initialBranchLength - i, level);
+            placeBranchWithLeaves(x - 1, branchHeight, z, DIR_X_MINUS, initialBranchLength - i, level);
+            placeBranchWithLeaves(x, branchHeight,z + 1, DIR_Z_PLUS, initialBranchLength - i, level);
+            placeBranchWithLeaves(x, branchHeight,z - 1, DIR_Z_MINUS, initialBranchLength - i, level);
+        }
+
+        int presentHeight = y + height / 3 - 2;
+        if (height > 20) {
+            placeBlock(ChristmasBlocks.christmasPresent.get(), x - initialBranchLength, presentHeight, z, level);
+            placeBlock(ChristmasBlocks.christmasPresent.get(), x + initialBranchLength, presentHeight, z, level);
+            placeBlock(ChristmasBlocks.christmasPresent.get(), x, presentHeight, z - initialBranchLength, level);
+            placeBlock(ChristmasBlocks.christmasPresent.get(), x, presentHeight, z + initialBranchLength, level);
         }
     }
 

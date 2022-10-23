@@ -1,0 +1,68 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:netherite_ingot",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:diamond",
+          "weight": 7
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:leather_boots",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:leather_helmet",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:apple",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:carrot",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "name": "christmastime:snow_gun",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "name": "christmastime:spruce_meal",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:wheat",
+          "functions": [
+            {
+              "add": false,
+              "count": 2.0,
+              "function": "minecraft:set_count"
+            }
+          ],
+          "weight": 13
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:cookie",
+          "weight": 59
+        }
+      ],
+      "rolls": 1.0
+    }
+  ]
+}
