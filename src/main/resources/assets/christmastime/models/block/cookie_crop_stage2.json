@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/crop",
+  "textures": {
+    "crop": "christmastime:block/cookie_crop_stage2"
+  }
+}

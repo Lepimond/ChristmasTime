@@ -46,6 +46,30 @@
         },
         {
           "type": "minecraft:item",
+          "name": "christmastime:cookie_seeds",
+          "functions": [
+            {
+              "add": false,
+              "count": 2.0,
+              "function": "minecraft:set_count"
+            }
+          ],
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:gold_nugget",
+          "functions": [
+            {
+              "add": false,
+              "count": 5.0,
+              "function": "minecraft:set_count"
+            }
+          ],
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
           "name": "minecraft:wheat",
           "functions": [
             {
@@ -54,7 +78,7 @@
               "function": "minecraft:set_count"
             }
           ],
-          "weight": 13
+          "weight": 7
         },
         {
           "type": "minecraft:item",

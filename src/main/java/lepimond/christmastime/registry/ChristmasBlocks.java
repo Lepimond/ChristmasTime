@@ -3,6 +3,7 @@ package lepimond.christmastime.registry;
 import lepimond.christmastime.ChristmasTime;
 import lepimond.christmastime.blocks.ChristmasLeaves;
 import lepimond.christmastime.blocks.ChristmasPresent;
+import lepimond.christmastime.blocks.CookieCrop;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
@@ -19,6 +20,8 @@ public class ChristmasBlocks {
     public static final RegistryObject<Block> christmasLeaves = register("christmas_leaves", ChristmasLeaves::new);
 
     public static final RegistryObject<Block> christmasPresent = register("christmas_present", ChristmasPresent::new);
+
+    public static final RegistryObject<Block> cookieCrop = register("cookie_crop", CookieCrop::new);
 
     private static RegistryObject<Block> register(String name, Supplier<? extends Block> supplier) {
         RegistryObject<Block> result = BLOCKS.register(name, supplier);

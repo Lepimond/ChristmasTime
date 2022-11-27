@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "minecraft:cookie"
+    }
+  ],
+  "result": {
+    "count": 3,
+    "item": "christmastime:cookie_seeds"
+  }
+}

@@ -1,17 +1,23 @@
 package lepimond.christmastime.items;
 
 import lepimond.christmastime.registry.ChristmasBlocks;
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.BoneMealItem;
 import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 
+import javax.annotation.Nullable;
+import java.util.List;
 import java.util.Random;
 
 public class SpruceMealItem extends BoneMealItem {
@@ -312,5 +318,10 @@ public class SpruceMealItem extends BoneMealItem {
     private void placeBlock(Block block, int x, int y, int z, Level level) {
         BlockPos pos = new BlockPos(x, y, z);
         level.setBlock(pos, block.defaultBlockState(), 19);
+    }
+
+    @Override
+    public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> components, TooltipFlag flag) {
+        components.add(Component.literal("Use it on spruce!").withStyle(ChatFormatting.GREEN));
     }
 }
