@@ -17,6 +17,5 @@ public class ChristmasEntityTypes {
                     .setCustomClientFactory(LeggedBoat::new)
                     .build(new ResourceLocation(ChristmasTime.MODID, "legged_boat").toString()));
 
-    //1.0f, 3.0f legged boat size
     //Whether the boat is underwater is being checked through absolute values, depends on hitbox. Unfortunately.
 }
