@@ -1,10 +1,14 @@
 package lepimond.christmastime.entities;
 
+import lepimond.christmastime.items.LeggedBoatItem;
+import lepimond.christmastime.registry.ChristmasItems;
 import net.minecraft.network.protocol.game.ServerboundPaddleBoatPacket;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.vehicle.Boat;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.network.PlayMessages;
@@ -71,9 +75,23 @@ public class LeggedBoat extends Boat {
                 f -= 0.2F;
             }
 
+            if(this.isUnderWater()) {
+                f /= 1.0F;
+            } else if (this.isInWater()) {
+                f /= 6.0F;
+            } else if(!this.isOnGround()) {
+                f = 0.0F;
+            }
+
             this.setDeltaMovement(this.getDeltaMovement().add((double)(Mth.sin(-this.getYRot() * ((float)Math.PI / 180F)) * f), 0.0D, (double)(Mth.cos(this.getYRot() * ((float)Math.PI / 180F)) * f)));
             this.setPaddleState(this.leggedInputRight && !this.leggedInputLeft || this.leggedInputUp, this.leggedInputLeft && !this.leggedInputRight || this.leggedInputUp);
         }
+    }
+
+    //Made it never eject passengers (for successful underwater travel)
+    @Override
+    public void ejectPassengers() {
+
     }
 
     @Override
@@ -119,5 +137,9 @@ public class LeggedBoat extends Boat {
         leggedInputRight = p_38344_;
         leggedInputUp = p_38345_;
         leggedInputDown = p_38346_;
+    }
+
+    public Item getDropItem() {
+        return ChristmasItems.leggedBoat.get();
     }
 }

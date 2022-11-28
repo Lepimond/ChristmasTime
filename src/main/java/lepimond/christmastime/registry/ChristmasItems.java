@@ -1,6 +1,7 @@
 package lepimond.christmastime.registry;
 
 import lepimond.christmastime.ChristmasTime;
+import lepimond.christmastime.items.LeggedBoatItem;
 import lepimond.christmastime.items.SnowGunItem;
 import lepimond.christmastime.items.SpruceMealItem;
 import net.minecraft.world.item.CreativeModeTab;
@@ -15,6 +16,7 @@ public class ChristmasItems {
 
     public static final RegistryObject<Item> spruceMeal = ITEMS.register("spruce_meal", SpruceMealItem::new);
     public static final RegistryObject<Item> snowGun = ITEMS.register("snow_gun", SnowGunItem::new);
+    public static final RegistryObject<Item> leggedBoat = ITEMS.register("legged_boat", LeggedBoatItem::new);
     public static final RegistryObject<Item> cookieSeeds = ITEMS.register("cookie_seeds",
             () -> new ItemNameBlockItem(ChristmasBlocks.cookieCrop.get(), new Item.Properties()));
 }

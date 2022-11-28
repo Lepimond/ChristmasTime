@@ -13,7 +13,7 @@ public class ChristmasEntityTypes {
 
     public static final RegistryObject<EntityType<LeggedBoat>> leggedBoat = ENTITY_TYPES.register("legged_boat",
             () -> EntityType.Builder.<LeggedBoat>of(LeggedBoat::new, MobCategory.MISC)
-                    .sized(1.375F, 1.0F)
+                    .sized(0.95F, 2.45F)
                     .setCustomClientFactory(LeggedBoat::new)
                     .build(new ResourceLocation(ChristmasTime.MODID, "legged_boat").toString()));
 

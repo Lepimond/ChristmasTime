@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "B": {
+      "item": "minecraft:spruce_boat"
+    },
+    "S": {
+      "item": "minecraft:stick"
+    },
+    "M": {
+      "item": "christmastime:spruce_meal"
+    }
+  },
+  "pattern": [
+    " M ",
+    "MBM",
+    "S S"
+  ],
+  "result": {
+    "item": "christmastime:legged_boat"
+  }
+}

@@ -2,5 +2,9 @@
   "item.christmastime.spruce_meal": "Spruce Meal",
   "item.christmastime.snow_gun": "Snow Gun",
   "item.christmastime.cookie_seeds": "Cookie Seeds",
-  "block.christmastime.christmas_present": "Christmas Present"
+  "item.christmastime.legged_boat": "Legged Boat",
+
+  "block.christmastime.christmas_present": "Christmas Present",
+
+  "entity.christmastime.legged_boat": "Legged Boat"
 }
