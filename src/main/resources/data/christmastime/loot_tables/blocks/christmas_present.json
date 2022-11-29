@@ -37,7 +37,7 @@
         {
           "type": "minecraft:item",
           "name": "christmastime:snow_gun",
-          "weight": 3
+          "weight": 9
         },
         {
           "type": "minecraft:item",
@@ -82,8 +82,13 @@
         },
         {
           "type": "minecraft:item",
+          "name": "christmastime:legged_boat",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
           "name": "minecraft:cookie",
-          "weight": 59
+          "weight": 50
         }
       ],
       "rolls": 1.0
