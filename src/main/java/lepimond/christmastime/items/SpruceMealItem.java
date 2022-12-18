@@ -1,13 +1,13 @@
 package lepimond.christmastime.items;
 
 import lepimond.christmastime.registry.ChristmasBlocks;
+import lepimond.christmastime.registry.ChristmasCreativeTabs;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.BoneMealItem;
-import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.UseOnContext;
@@ -38,7 +38,7 @@ public class SpruceMealItem extends BoneMealItem {
 
 
     public SpruceMealItem() {
-        super(new Properties().tab(CreativeModeTab.TAB_REDSTONE));
+        super(new Properties().tab(ChristmasCreativeTabs.CHRISTMAS_TAB));
     }
 
     @Override

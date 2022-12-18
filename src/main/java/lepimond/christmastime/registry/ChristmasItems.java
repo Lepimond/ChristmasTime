@@ -4,7 +4,6 @@ import lepimond.christmastime.ChristmasTime;
 import lepimond.christmastime.items.LeggedBoatItem;
 import lepimond.christmastime.items.SnowGunItem;
 import lepimond.christmastime.items.SpruceMealItem;
-import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemNameBlockItem;
 import net.minecraftforge.registries.DeferredRegister;

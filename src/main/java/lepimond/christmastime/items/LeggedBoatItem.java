@@ -1,18 +1,15 @@
 package lepimond.christmastime.items;
 
 import lepimond.christmastime.entities.LeggedBoat;
+import lepimond.christmastime.registry.ChristmasCreativeTabs;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntitySelector;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.vehicle.Boat;
-import net.minecraft.world.entity.vehicle.ChestBoat;
-import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.gameevent.GameEvent;
@@ -27,7 +24,7 @@ public class LeggedBoatItem extends Item {
     private static final Predicate<Entity> ENTITY_PREDICATE = EntitySelector.NO_SPECTATORS.and(Entity::isPickable);
 
     public LeggedBoatItem() {
-        super(new Properties().tab(CreativeModeTab.TAB_REDSTONE));
+        super(new Properties().tab(ChristmasCreativeTabs.CHRISTMAS_TAB));
     }
 
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {

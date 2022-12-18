@@ -5,7 +5,6 @@ import lepimond.christmastime.blocks.ChristmasLeaves;
 import lepimond.christmastime.blocks.ChristmasPresent;
 import lepimond.christmastime.blocks.CookieCrop;
 import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.registries.DeferredRegister;
@@ -25,7 +24,7 @@ public class ChristmasBlocks {
 
     private static RegistryObject<Block> register(String name, Supplier<? extends Block> supplier) {
         RegistryObject<Block> result = BLOCKS.register(name, supplier);
-        ChristmasItems.ITEMS.register(name, () -> new BlockItem(result.get(), new Item.Properties().tab(CreativeModeTab.TAB_REDSTONE)));
+        ChristmasItems.ITEMS.register(name, () -> new BlockItem(result.get(), new Item.Properties().tab(ChristmasCreativeTabs.CHRISTMAS_TAB)));
 
         return result;
     }

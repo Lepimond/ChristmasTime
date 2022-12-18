@@ -1,6 +1,6 @@
 package lepimond.christmastime.entities;
 
-import lepimond.christmastime.items.LeggedBoatItem;
+import lepimond.christmastime.registry.ChristmasEntities;
 import lepimond.christmastime.registry.ChristmasItems;
 import net.minecraft.network.protocol.game.ServerboundPaddleBoatPacket;
 import net.minecraft.util.Mth;
@@ -8,7 +8,6 @@ import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.vehicle.Boat;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.network.PlayMessages;
@@ -28,7 +27,7 @@ public class LeggedBoat extends Boat {
     }
 
     public LeggedBoat(Level worldIn, double x, double y, double z) {
-        this(ChristmasEntityTypes.leggedBoat.get(), worldIn);
+        this(ChristmasEntities.leggedBoat.get(), worldIn);
         this.setPos(x, y, z);
         this.setDeltaMovement(Vec3.ZERO);
         this.xo = x;
@@ -37,7 +36,7 @@ public class LeggedBoat extends Boat {
     }
 
     public LeggedBoat(PlayMessages.SpawnEntity packet, Level worldIn) {
-        super(ChristmasEntityTypes.leggedBoat.get(), worldIn);
+        super(ChristmasEntities.leggedBoat.get(), worldIn);
     }
 
     @Override

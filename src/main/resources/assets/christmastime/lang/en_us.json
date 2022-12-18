@@ -5,6 +5,10 @@
   "item.christmastime.legged_boat": "Legged Boat",
 
   "block.christmastime.christmas_present": "Christmas Present",
+  "block.christmastime.christmas_leaves": "Christmas Leaves",
+  "block.christmastime.cookie_furnace": "Cookie Furnace",
 
-  "entity.christmastime.legged_boat": "Legged Boat"
+  "entity.christmastime.legged_boat": "Legged Boat",
+
+  "itemGroup.christmas_tab": "Christmas Time"
 }
