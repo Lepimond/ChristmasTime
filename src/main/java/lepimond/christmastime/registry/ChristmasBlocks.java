@@ -5,7 +5,6 @@ import lepimond.christmastime.blocks.ChristmasLeaves;
 import lepimond.christmastime.blocks.ChristmasPresent;
 import lepimond.christmastime.blocks.CookieCrop;
 import lepimond.christmastime.blocks.TextAppendable;
-import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
@@ -35,7 +34,9 @@ public class ChristmasBlocks {
         ChristmasItems.ITEMS.register(name, () -> new BlockItem(result.get(), new Item.Properties().tab(ChristmasCreativeTabs.CHRISTMAS_TAB)) {
             @Override
             public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> components, TooltipFlag flag) {
-                components.add(((TextAppendable) supplier.get()).getHoverText());
+                if (this.getBlock() instanceof TextAppendable) {
+                    components.add(((TextAppendable) this.getBlock()).getHoverText());
+                }
             }
         });
 

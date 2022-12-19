@@ -13,6 +13,7 @@ import net.minecraft.world.entity.projectile.ThrowableItemProjectile;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -61,7 +62,16 @@ public class GunSnowball extends ThrowableItemProjectile {
         super.onHitEntity(hitResult);
 
         Entity entity = hitResult.getEntity();
-        int i = entity instanceof Blaze ? 10 : 4;
+        Level worldIn = entity.getLevel();
+
+        int i;
+        if (entity instanceof Blaze) {
+            worldIn.explode(this, this.getX(), this.getY(), this.getZ(), 6.0F, Explosion.BlockInteraction.DESTROY);
+            i = 10;
+        } else {
+            i = 4;
+        }
+
         entity.hurt(DamageSource.thrown(this, this.getOwner()), (float)i);
     }
 
