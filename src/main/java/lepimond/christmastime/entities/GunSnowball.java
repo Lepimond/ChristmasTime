@@ -84,15 +84,12 @@ public class GunSnowball extends ThrowableItemProjectile {
         Block underBlock = level.getBlockState(underPos).getBlock();
 
         if (block == Blocks.AIR && underBlock != Blocks.AIR) {
-            System.out.println("Air!");
             level.setBlockAndUpdate(pos, Blocks.SNOW.defaultBlockState());
 
-        } else if (block == Blocks.SNOW) { //doesn't work for some reason
-            System.out.println("Snow!");
+        } else if (block == Blocks.SNOW) { //TODO doesn't work for some reason
             int layers = block.getStateDefinition().any().getValue(BlockStateProperties.LAYERS);
             BlockState snowState = block.getStateDefinition().any();
             snowState.setValue(BlockStateProperties.LAYERS,layers + 1);
-            System.out.println(layers);
 
             level.setBlockAndUpdate(pos, snowState);
         }

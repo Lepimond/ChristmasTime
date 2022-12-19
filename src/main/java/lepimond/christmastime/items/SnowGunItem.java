@@ -8,12 +8,14 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
 
 import javax.annotation.Nullable;
 import java.util.List;
+import java.util.function.Predicate;
 
 public class SnowGunItem extends Item {
 
@@ -25,6 +27,14 @@ public class SnowGunItem extends Item {
 
     @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
+        if (!player.isCreative()) {
+            ItemStack snowballStack = getSnowballStack(player);
+            if (snowballStack == null)
+                return InteractionResultHolder.fail(player.getItemInHand(hand));
+
+            snowballStack.shrink(1);
+        }
+
         GunSnowball snowball = new GunSnowball(level, player);
         snowball.shootFromRotation(player, player.getXRot(), player.getYRot(), 0.0F, 1.5F, DEFAULT_POWER);
         level.addFreshEntity(snowball);
@@ -35,6 +45,19 @@ public class SnowGunItem extends Item {
         snowGun.setDamageValue(snowGun.getDamageValue() + 1);
 
         return InteractionResultHolder.pass(player.getItemInHand(hand));
+    }
+
+    private ItemStack getSnowballStack(Player player) {
+        Inventory inventory = player.getInventory();
+
+        for (int i = 0; i < player.getInventory().getContainerSize(); i++) {
+            ItemStack currentStack = inventory.getItem(i);
+            if (currentStack.getItem() == Items.SNOWBALL) {
+                return currentStack;
+            }
+        }
+
+        return null;
     }
 
     @Override

@@ -1,7 +1,9 @@
 package lepimond.christmastime.blocks;
 
 import lepimond.christmastime.registry.ChristmasBlocks;
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
@@ -20,7 +22,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-public class ChristmasPresent extends Block {
+public class ChristmasPresent extends Block implements TextAppendable {
     protected static final VoxelShape SHAPE = Block.box(4.0D, 0.0D, 4.0D, 12.0D, 15.0D, 12.0D);
 
     public ChristmasPresent() {
@@ -40,5 +42,10 @@ public class ChristmasPresent extends Block {
         level.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.WART_BLOCK_STEP, SoundSource.NEUTRAL, 0.5F, 0.4F / (level.getRandom().nextFloat() * 0.4F + 0.8F));
 
         return InteractionResult.PASS;
+    }
+
+    @Override
+    public Component getHoverText() {
+        return Component.literal("Use Spruce Meal to get Christmas Presents!").withStyle(ChatFormatting.GOLD);
     }
 }
