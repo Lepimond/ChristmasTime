@@ -2,6 +2,9 @@ package lepimond.christmastime.items;
 
 import lepimond.christmastime.registry.ChristmasCreativeTabs;
 import net.minecraft.ChatFormatting;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -15,16 +18,12 @@ import net.minecraft.world.entity.projectile.ThrownEnderpearl;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
-import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 import java.util.List;
-import java.util.UUID;
 
 public class LinkedPearlItem extends Item {
-    private UUID linkedID;
     private LivingEntity linkedEntity;
 
     public LinkedPearlItem() {
@@ -36,9 +35,8 @@ public class LinkedPearlItem extends Item {
         if (!player.isCrouching())
             return InteractionResult.FAIL;
 
-        this.linkedID = entity.getUUID();
         this.linkedEntity = entity;
-        System.out.println("Linked!");
+
         return InteractionResult.sidedSuccess(player.getLevel().isClientSide);
     }
 
@@ -58,7 +56,15 @@ public class LinkedPearlItem extends Item {
         player.getCooldowns().addCooldown(this, 20);
 
         if (!worldIn.isClientSide) {
-            ThrownEnderpearl thrownPearl = new ThrownEnderpearl(worldIn, linkedEntity);
+
+            ThrownEnderpearl thrownPearl;
+            if (linkedEntity instanceof Player linkedPlayer) {
+                Player teleportPlayer = worldIn.getPlayerByUUID(linkedPlayer.getUUID());
+                thrownPearl = new ThrownEnderpearl(worldIn, teleportPlayer);
+            } else {
+                thrownPearl = new ThrownEnderpearl(worldIn, linkedEntity);
+            }
+
             thrownPearl.setItem(stack);
             thrownPearl.setPos(player.getX(), player.getY(), player.getZ());
             thrownPearl.shootFromRotation(player, player.getXRot(), player.getYRot(), 0.0F, 1.5F, 1.0F);
@@ -75,6 +81,8 @@ public class LinkedPearlItem extends Item {
 
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> components, TooltipFlag flag) {
-        components.add(Component.literal("Drops from Christmas Presents! 8% chance").withStyle(ChatFormatting.AQUA));
+        components.add(Component.literal("15% chance to drop from Presents").withStyle(ChatFormatting.AQUA));
+        if (linkedEntity != null)
+            components.add(Component.literal("Linked!").withStyle(ChatFormatting.RED));
     }
 }
