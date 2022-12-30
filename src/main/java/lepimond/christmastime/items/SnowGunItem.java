@@ -62,6 +62,6 @@ public class SnowGunItem extends Item {
 
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> components, TooltipFlag flag) {
-        components.add(Component.literal("Drops from Christmas Presents!").withStyle(ChatFormatting.RED));
+        components.add(Component.literal("Shoot at Christmas Presents! Also damages mobs").withStyle(ChatFormatting.RED));
     }
 }

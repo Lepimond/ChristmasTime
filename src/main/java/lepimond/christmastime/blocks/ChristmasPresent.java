@@ -46,6 +46,6 @@ public class ChristmasPresent extends Block implements TextAppendable {
 
     @Override
     public Component getHoverText() {
-        return Component.literal("Use Spruce Meal to get Christmas Presents!").withStyle(ChatFormatting.GOLD);
+        return Component.literal("Spruce Meal makes Christmas Presents! Snow Gun helps get 'em").withStyle(ChatFormatting.GOLD);
     }
 }

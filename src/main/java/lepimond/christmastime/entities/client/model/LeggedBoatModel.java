@@ -70,8 +70,8 @@ public class LeggedBoatModel extends ListModel<LeggedBoat> {
     }
 
     public void setupAnim(LeggedBoat boat, float p_102270_, float p_102271_, float p_102272_, float p_102273_, float p_102274_) {
-        animateLimb(boat, 1, this.leftPaddle);
-        animateLimb(boat, 0, this.rightPaddle);
+        animateLimb(boat, 3, this.leftPaddle);
+        animateLimb(boat, 2, this.rightPaddle);
 
         animateLimb(boat, 1, this.rightLeg);
         animateLimb(boat, 0, this.leftLeg);
@@ -83,11 +83,17 @@ public class LeggedBoatModel extends ListModel<LeggedBoat> {
 
     private static void animateLimb(Boat boat, int whichLimb, ModelPart paddle) {
         float f = boat.getPaddleState(whichLimb) ? Mth.sin(Math.abs(System.currentTimeMillis() % 1000 / 1000.0F - 0.5F)) + 0.25F : 0.5F;
+        //Lerp(a, b, t) returns a if t == 0, b if t == 1, and (a + b) / 2 if t == 0.5
         paddle.zRot = Mth.clampedLerp(- Mth.PI / 2, Mth.PI / 2, f);
 
-        //Lerp(a, b, t) returns a if t == 0, b if t == 1, and (a + b) / 2 if t == 0.5
+        //Separate anim for drowning
+        if (boat.isInWater() && !boat.isOnGround() && whichLimb > 1) {
+            f = Mth.sin(Math.abs(((long)(System.currentTimeMillis() * 1.5D)) % 1000 / 1000.0F - 0.5F)) + 0.25F;
+            paddle.zRot = Mth.clampedLerp(Mth.PI / 2, 3 * Mth.PI / 2, f);
+        }
 
-        if (whichLimb == 1) {
+        //Only right limbs (right are odd, left are even)
+        if (whichLimb % 2 == 1) {
             paddle.zRot = - paddle.zRot;
         }
     }

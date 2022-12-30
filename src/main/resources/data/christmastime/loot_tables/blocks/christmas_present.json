@@ -87,8 +87,13 @@
         },
         {
           "type": "minecraft:item",
+          "name": "christmastime:linked_pearl",
+          "weight": 8
+        },
+        {
+          "type": "minecraft:item",
           "name": "minecraft:cookie",
-          "weight": 50
+          "weight": 42
         }
       ],
       "rolls": 1.0

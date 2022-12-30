@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "I": {
+      "item": "minecraft:iron_ingot"
+    },
+    "S": {
+      "item": "minecraft:snowball"
+    },
+    "G": {
+      "item": "minecraft:gold_ingot"
+    }
+  },
+  "pattern": [
+    "I  ",
+    "SG ",
+    "ISI"
+  ],
+  "result": {
+    "item": "christmastime:snow_gun",
+    "count": 1
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "item.christmastime.spruce_meal": "Ёлочная мука",
+  "item.christmastime.snow_gun": "Снежная пушка",
+  "item.christmastime.cookie_seeds": "Семена печенек",
+  "item.christmastime.legged_boat": "Лодка на ножках",
+  "item.christmastime.linked_pearl": "Привязанный жемчуг",
+
+  "block.christmastime.christmas_present": "Новогодний подарок",
+  "block.christmastime.christmas_leaves": "Новогодняя листва",
+  "block.christmastime.cookie_furnace": "Печёночная печь",
+
+  "entity.christmastime.legged_boat": "Лодка на ножках",
+
+  "itemGroup.christmas_tab": "Christmas Time"
+}

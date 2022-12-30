@@ -1,5 +1,7 @@
 package lepimond.christmastime.entities;
 
+import lepimond.christmastime.blocks.ChristmasPresent;
+import lepimond.christmastime.registry.ChristmasBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.core.particles.ParticleOptions;
@@ -66,7 +68,7 @@ public class GunSnowball extends ThrowableItemProjectile {
 
         int i;
         if (entity instanceof Blaze) {
-            worldIn.explode(this, this.getX(), this.getY(), this.getZ(), 6.0F, Explosion.BlockInteraction.DESTROY);
+            worldIn.explode(this, this.getX(), this.getY(), this.getZ(), 3.0F, Explosion.BlockInteraction.BREAK);
             i = 10;
         } else {
             i = 4;
@@ -88,20 +90,25 @@ public class GunSnowball extends ThrowableItemProjectile {
         int z = (int) Math.round(hitResult.getLocation().z + 0.5) - 1;
         BlockPos pos = new BlockPos(x, y, z);
         BlockPos underPos = new BlockPos(x, y - 1, z);
-        Level level = this.getLevel();
+        Level worldIn = this.getLevel();
 
-        Block block = level.getBlockState(pos).getBlock();
-        Block underBlock = level.getBlockState(underPos).getBlock();
+        Block block = worldIn.getBlockState(pos).getBlock();
+        Block underBlock = worldIn.getBlockState(underPos).getBlock();
+
+        if (block instanceof ChristmasPresent) {
+            worldIn.explode(this, this.getX(), this.getY(), this.getZ(), 2.0F, Explosion.BlockInteraction.BREAK);
+            return;
+        }
 
         if (block == Blocks.AIR && underBlock != Blocks.AIR) {
-            level.setBlockAndUpdate(pos, Blocks.SNOW.defaultBlockState());
+            worldIn.setBlockAndUpdate(pos, Blocks.SNOW.defaultBlockState());
 
         } else if (block == Blocks.SNOW) { //TODO doesn't work for some reason
             int layers = block.getStateDefinition().any().getValue(BlockStateProperties.LAYERS);
             BlockState snowState = block.getStateDefinition().any();
             snowState.setValue(BlockStateProperties.LAYERS,layers + 1);
 
-            level.setBlockAndUpdate(pos, snowState);
+            worldIn.setBlockAndUpdate(pos, snowState);
         }
     }
 }
