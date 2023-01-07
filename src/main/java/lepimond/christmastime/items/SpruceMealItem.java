@@ -1,13 +1,16 @@
 package lepimond.christmastime.items;
 
+import lepimond.christmastime.ChristmasTime;
 import lepimond.christmastime.registry.ChristmasBlocks;
 import lepimond.christmastime.registry.ChristmasCreativeTabs;
+import lepimond.christmastime.registry.ChristmasItems;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.BoneMealItem;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.UseOnContext;
@@ -18,6 +21,7 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 
 import javax.annotation.Nullable;
 import java.util.List;
+import java.util.Properties;
 import java.util.Random;
 
 public class SpruceMealItem extends BoneMealItem {
@@ -38,7 +42,7 @@ public class SpruceMealItem extends BoneMealItem {
 
 
     public SpruceMealItem() {
-        super(new Properties().tab(ChristmasCreativeTabs.CHRISTMAS_TAB));
+        super(ChristmasItems.standardProps());
     }
 
     @Override

@@ -1,6 +1,6 @@
 package lepimond.christmastime.items;
 
-import lepimond.christmastime.registry.ChristmasCreativeTabs;
+import lepimond.christmastime.registry.ChristmasItems;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -28,7 +28,7 @@ public class LinkedPearlItem extends Item {
     private LivingEntity linkedEntity;
 
     public LinkedPearlItem() {
-        super(new Item.Properties().tab(ChristmasCreativeTabs.CHRISTMAS_TAB).stacksTo(1));
+        super(ChristmasItems.standardProps().stacksTo(1));
     }
 
     @Override

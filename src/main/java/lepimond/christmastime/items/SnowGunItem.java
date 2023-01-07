@@ -2,6 +2,7 @@ package lepimond.christmastime.items;
 
 import lepimond.christmastime.entities.GunSnowball;
 import lepimond.christmastime.registry.ChristmasCreativeTabs;
+import lepimond.christmastime.registry.ChristmasItems;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
@@ -15,14 +16,13 @@ import net.minecraft.world.level.Level;
 
 import javax.annotation.Nullable;
 import java.util.List;
-import java.util.function.Predicate;
 
 public class SnowGunItem extends Item {
 
     public static final float DEFAULT_POWER = 3.0F;
 
     public SnowGunItem() {
-        super(new Properties().tab(ChristmasCreativeTabs.CHRISTMAS_TAB).durability(500));
+        super(ChristmasItems.standardProps().durability(500));
     }
 
     @Override

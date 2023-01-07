@@ -2,6 +2,7 @@ package lepimond.christmastime.items;
 
 import lepimond.christmastime.entities.LeggedBoat;
 import lepimond.christmastime.registry.ChristmasCreativeTabs;
+import lepimond.christmastime.registry.ChristmasItems;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
@@ -24,7 +25,7 @@ public class LeggedBoatItem extends Item {
     private static final Predicate<Entity> ENTITY_PREDICATE = EntitySelector.NO_SPECTATORS.and(Entity::isPickable);
 
     public LeggedBoatItem() {
-        super(new Properties().tab(ChristmasCreativeTabs.CHRISTMAS_TAB));
+        super(ChristmasItems.standardProps());
     }
 
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
