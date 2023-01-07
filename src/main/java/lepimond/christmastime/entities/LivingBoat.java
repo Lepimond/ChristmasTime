@@ -31,7 +31,6 @@ public class LivingBoat extends Animal { ;
 
     @Override
     protected void registerGoals() {
-        this.goalSelector.addGoal(1, new FloatGoal(this));
         this.goalSelector.addGoal(4, new LeapAtTargetGoal(this, 0.4F));
         this.goalSelector.addGoal(5, new MeleeAttackGoal(this, 1.0D, true));
         this.goalSelector.addGoal(7, new BreedGoal(this, 1.0D));
@@ -58,8 +57,8 @@ public class LivingBoat extends Animal { ;
     public static AttributeSupplier.Builder getExampleAttributes() {
         return Animal.createMobAttributes()
                 .add(ForgeMod.STEP_HEIGHT_ADDITION.get(), 2.0F)
-                .add(Attributes.MOVEMENT_SPEED, 0.4F)
-                .add(Attributes.ATTACK_DAMAGE, 1.0F)
+                .add(Attributes.MOVEMENT_SPEED, 0.45F)
+                .add(Attributes.ATTACK_DAMAGE, 6.0F)
                 .add(Attributes.MAX_HEALTH, 40.0F);
     }
 
