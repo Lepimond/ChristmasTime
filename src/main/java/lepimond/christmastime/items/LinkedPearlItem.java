@@ -2,9 +2,8 @@ package lepimond.christmastime.items;
 
 import lepimond.christmastime.registry.ChristmasCreativeTabs;
 import net.minecraft.ChatFormatting;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.ListTag;
-import net.minecraft.nbt.Tag;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -18,7 +17,9 @@ import net.minecraft.world.entity.projectile.ThrownEnderpearl;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -77,6 +78,20 @@ public class LinkedPearlItem extends Item {
         }
 
         return InteractionResultHolder.sidedSuccess(stack, worldIn.isClientSide());
+    }
+
+    @Override
+    public InteractionResult useOn(UseOnContext context) {
+        Level worldIn = context.getLevel();
+        BlockPos pos = context.getClickedPos();
+        Direction dir = context.getClickedFace();
+
+
+        return InteractionResult.sidedSuccess(worldIn.isClientSide());
+    }
+
+    protected boolean mayPlace(Player p_41326_, Direction p_41327_, ItemStack p_41328_, BlockPos p_41329_) {
+        return !p_41327_.getAxis().isVertical() && p_41326_.mayUseItemAt(p_41329_, p_41327_, p_41328_);
     }
 
     @Override

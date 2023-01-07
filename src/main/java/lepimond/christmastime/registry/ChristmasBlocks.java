@@ -1,10 +1,7 @@
 package lepimond.christmastime.registry;
 
 import lepimond.christmastime.ChristmasTime;
-import lepimond.christmastime.blocks.ChristmasLeaves;
-import lepimond.christmastime.blocks.ChristmasPresent;
-import lepimond.christmastime.blocks.CookieCrop;
-import lepimond.christmastime.blocks.TextAppendable;
+import lepimond.christmastime.blocks.*;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;

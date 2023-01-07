@@ -2,13 +2,18 @@ package lepimond.christmastime.entities;
 
 import lepimond.christmastime.registry.ChristmasEntities;
 import lepimond.christmastime.registry.ChristmasItems;
+import net.minecraft.core.BlockPos;
 import net.minecraft.network.protocol.game.ServerboundPaddleBoatPacket;
 import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.Difficulty;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.animal.Animal;
+import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.vehicle.Boat;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.network.PlayMessages;
 

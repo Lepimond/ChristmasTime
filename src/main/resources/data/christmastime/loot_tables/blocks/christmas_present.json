@@ -92,8 +92,13 @@
         },
         {
           "type": "minecraft:item",
+          "name": "christmastime:my_song",
+          "weight": 8
+        },
+        {
+          "type": "minecraft:item",
           "name": "minecraft:cookie",
-          "weight": 35
+          "weight": 27
         }
       ],
       "rolls": 1.0

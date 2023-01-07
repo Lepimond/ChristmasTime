@@ -1,0 +1,10 @@
+{
+  "christmas_song": {
+    "sounds": [
+      {
+        "name": "christmastime:christmas_song",
+        "stream": true
+      }
+    ]
+  }
+}
