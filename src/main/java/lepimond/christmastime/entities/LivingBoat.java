@@ -61,23 +61,4 @@ public class LivingBoat extends Animal { ;
                 .add(Attributes.ATTACK_DAMAGE, 6.0F)
                 .add(Attributes.MAX_HEALTH, 40.0F);
     }
-
-    @Override
-    public InteractionResult mobInteract(Player player, InteractionHand hand) {
-        if (!this.isVehicle() && !player.isSecondaryUseActive()) {
-            if (!this.level.isClientSide) {
-                player.startRiding(this);
-                //TODO player.moveTo(new Vec3(0.0F, -1.0F, 0.0F));
-            }
-            return InteractionResult.sidedSuccess(this.level.isClientSide);
-        } else {
-            InteractionResult interactionresult = super.mobInteract(player, hand);
-            if (!interactionresult.consumesAction()) {
-                ItemStack itemstack = player.getItemInHand(hand);
-                return itemstack.interactLivingEntity(player, this, hand);
-            } else {
-                return interactionresult;
-            }
-        }
-    }
 }
