@@ -59,11 +59,11 @@ public class LeggedBoat extends Boat {
             float f = 0.0F; //Boat's speed
             float d = 0.0F; //Boat's rotational speed
             if (this.leggedInputLeft) {
-                d -= 3;
+                d -= 5;
             }
 
             if (this.leggedInputRight) {
-                d += 3;
+                d += 5;
             }
 
             if (this.leggedInputRight != this.leggedInputLeft && !this.leggedInputUp && !this.leggedInputDown) {
@@ -143,6 +143,7 @@ public class LeggedBoat extends Boat {
         leggedInputDown = p_38346_;
     }
 
+    @Override
     public Item getDropItem() {
         return ChristmasItems.leggedBoat.get();
     }

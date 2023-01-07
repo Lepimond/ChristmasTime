@@ -1,10 +1,7 @@
 package lepimond.christmastime.registry;
 
 import lepimond.christmastime.ChristmasTime;
-import lepimond.christmastime.items.LeggedBoatItem;
-import lepimond.christmastime.items.LinkedPearlItem;
-import lepimond.christmastime.items.SnowGunItem;
-import lepimond.christmastime.items.SpruceMealItem;
+import lepimond.christmastime.items.*;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -43,6 +40,7 @@ public class ChristmasItems {
 
     public static final RegistryObject<Item> boatSpawnEgg = ITEMS.register("living_boat_spawn_egg",
             () -> new ForgeSpawnEggItem(ChristmasEntities.livingBoat, 0x5B3315, 0xBC987E, standardProps().stacksTo(16)));
+    public static final RegistryObject<Item> boatRemains = ITEMS.register("boat_remains", BoatRemainsItem::new);
 
     private static Item.Properties standardProps() {
         return new Item.Properties().tab(ChristmasCreativeTabs.CHRISTMAS_TAB);

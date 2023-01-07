@@ -59,7 +59,8 @@ public class LivingBoat extends Animal { ;
         return Animal.createMobAttributes()
                 .add(ForgeMod.STEP_HEIGHT_ADDITION.get(), 2.0F)
                 .add(Attributes.MOVEMENT_SPEED, 0.4F)
-                .add(Attributes.ATTACK_DAMAGE, 1.0F);
+                .add(Attributes.ATTACK_DAMAGE, 1.0F)
+                .add(Attributes.MAX_HEALTH, 40.0F);
     }
 
     @Override

@@ -2,7 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "key": {
     "B": {
-      "item": "minecraft:spruce_boat"
+      "item": "christmastime:boat_remains"
     },
     "S": {
       "item": "minecraft:stick"
