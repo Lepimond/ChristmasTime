@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "L": {
+      "item": "minecraft:spruce_leaves"
+    },
+    "S": {
+      "item": "christmastime:spruce_meal"
+    }
+  },
+  "pattern": [
+    "LLL",
+    "LSL",
+    "LLL"
+  ],
+  "result": {
+    "item": "christmastime:legged_boat",
+    "count": 8
+  }
+}
