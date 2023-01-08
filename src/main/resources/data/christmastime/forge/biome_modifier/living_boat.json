@@ -3,7 +3,7 @@
   "biomes": "#minecraft:is_overworld",
   "spawners": {
     "type": "christmastime:living_boat",
-    "weight": 150,
+    "weight": 75,
     "minCount": 1,
     "maxCount": 4
   }
