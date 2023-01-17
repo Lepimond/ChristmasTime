@@ -1,0 +1,11 @@
+{
+  "type": "christmastime:boat_world",
+  "generator": {
+    "type": "minecraft:noise",
+    "settings": "christmastime:boat_world",
+    "biome_source": {
+      "type": "minecraft:fixed",
+      "biome": "christmastime:boat_biome"
+    }
+  }
+}

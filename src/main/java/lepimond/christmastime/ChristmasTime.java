@@ -1,26 +1,21 @@
 package lepimond.christmastime;
 
 import com.mojang.logging.LogUtils;
-import lepimond.christmastime.entities.LeggedBoat;
 import lepimond.christmastime.entities.LivingBoat;
 import lepimond.christmastime.entities.client.model.LivingBoatModel;
 import lepimond.christmastime.entities.client.renderer.LivingBoatRenderer;
-import lepimond.christmastime.registry.ChristmasEntities;
+import lepimond.christmastime.registry.*;
 import lepimond.christmastime.entities.client.model.LeggedBoatModel;
 import lepimond.christmastime.entities.client.renderer.LeggedBoatRenderer;
-import lepimond.christmastime.registry.ChristmasBlocks;
-import lepimond.christmastime.registry.ChristmasItems;
-import lepimond.christmastime.registry.ChristmasSounds;
+import lepimond.christmastime.worldgen.ChristmasBiomeKeys;
+import lepimond.christmastime.worldgen.biomes.BoatBiome;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.*;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.SpawnPlacements;
-import net.minecraft.world.entity.animal.Animal;
-import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraftforge.client.event.EntityRenderersEvent;
+import net.minecraftforge.common.BiomeManager;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -54,7 +49,8 @@ public class ChristmasTime {
         @SubscribeEvent
         public static void onCommonSetup(FMLCommonSetupEvent event) {
             event.enqueueWork(() -> {
-                SpawnPlacements.register(ChristmasEntities.livingBoat.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.WORLD_SURFACE, Animal::checkAnimalSpawnRules);
+                SpawnPlacements.register(ChristmasEntities.livingBoat.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.WORLD_SURFACE, LivingBoat::canSpawn);
+                BiomeManager.addAdditionalOverworldBiomes(ChristmasBiomeKeys.boatBiome);
                 System.out.println("LIVING BOAT SPAWN PLACEMENT REGISTERED!");
             });
         }

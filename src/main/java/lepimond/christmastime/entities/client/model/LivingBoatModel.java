@@ -23,19 +23,24 @@ public class LivingBoatModel extends ListModel<LivingBoat> {
 
     public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation(ChristmasTime.MODID, "living_boat"), "main");
 
+    private final ModelPart root;
+
     private final ModelPart leftPaddle;
     private final ModelPart rightPaddle;
     private final ModelPart leftLeg;
     private final ModelPart rightLeg;
+    private final ModelPart bottom;
 
     private final ImmutableList<ModelPart> parts;
 
     public LivingBoatModel(ModelPart root) {
+        this.root = root;
+
         this.leftPaddle = root.getChild("left_paddle");
         this.rightPaddle = root.getChild("right_paddle");
-
         this.leftLeg = root.getChild("left_leg");
         this.rightLeg = root.getChild("right_leg");
+        this.bottom = root.getChild("bottom");
 
         ImmutableList.Builder<ModelPart> builder = new ImmutableList.Builder<>();
         builder.add(root.getChild("bottom"), root.getChild("back"), root.getChild("front"), root.getChild("right"), root.getChild("left"), root.getChild("right_leg"), root.getChild("left_leg"), this.leftPaddle, this.rightPaddle);
@@ -69,17 +74,19 @@ public class LivingBoatModel extends ListModel<LivingBoat> {
         partdefinition.addOrReplaceChild("right_leg", CubeListBuilder.create().texOffs(60, 0).addBox(-6.0F, -1.0F, 0.0F, 2.0F, 10.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F + xOffset, -1.0F + yOffset, 0.0F + zOffset, xRotation, yRotation, zRotation));
         partdefinition.addOrReplaceChild("left_leg", CubeListBuilder.create().texOffs(56, 49).addBox(4.0F, -1.0F, 0.0F, 2.0F, 10.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F + xOffset, -1.0F + yOffset, 0.0F + zOffset, xRotation, yRotation, zRotation));
 
-
-        //partdefinition.addOrReplaceChild("water_patch", CubeListBuilder.create().texOffs(0, 0).addBox(-14.0F, -9.0F, -3.0F, 28.0F, 16.0F, 3.0F), PartPose.offsetAndRotation(0.0F, -3.0F, 1.0F, ((float)Math.PI / 2F), 0.0F, 0.0F));
-
         return LayerDefinition.create(meshdefinition, 128, 128);
     }
 
+    @Override
     public void setupAnim(LivingBoat boat, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
         leftPaddle.xRot = - Mth.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
         rightPaddle.xRot = Mth.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
         leftLeg.xRot = Mth.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
         rightLeg.xRot = - Mth.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
+
+        if (boat.isLeashed()) {
+            root.xRot += Mth.PI;
+        }
     }
 
     public ImmutableList<ModelPart> parts() {

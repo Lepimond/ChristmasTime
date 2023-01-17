@@ -26,6 +26,8 @@ public class ChristmasBlocks {
 
     public static final RegistryObject<Block> cookieCrop = register("cookie_crop", CookieCrop::new);
 
+    public static final RegistryObject<Block> boatPortal = register("boat_portal", BoatPortal::new);
+
     private static RegistryObject<Block> register(String name, Supplier<? extends Block> supplier) {
         RegistryObject<Block> result = BLOCKS.register(name, supplier);
         ChristmasItems.ITEMS.register(name, () -> new BlockItem(result.get(), new Item.Properties().tab(ChristmasCreativeTabs.CHRISTMAS_TAB)) {

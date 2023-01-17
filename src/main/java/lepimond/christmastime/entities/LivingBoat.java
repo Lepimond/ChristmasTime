@@ -1,6 +1,13 @@
 package lepimond.christmastime.entities;
 
+import lepimond.christmastime.dimensions.BoatDimension;
+import lepimond.christmastime.registry.ChristmasBlocks;
+import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -10,11 +17,21 @@ import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.vehicle.Boat;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeMod;
 import org.jetbrains.annotations.Nullable;
 
-public class LivingBoat extends Animal { ;
+import java.util.function.Predicate;
+
+public class LivingBoat extends Animal {
+
+    public static final Predicate<LivingEntity> PREY_SELECTOR = (p_30437_) -> {
+        EntityType<?> entitytype = p_30437_.getType();
+        return entitytype == EntityType.GOAT;
+    };
 
     public LivingBoat(EntityType<? extends Animal> type, Level level) {
         super(type, level);
@@ -28,14 +45,15 @@ public class LivingBoat extends Animal { ;
 
     @Override
     protected void registerGoals() {
-        this.goalSelector.addGoal(4, new LeapAtTargetGoal(this, 0.4F));
-        this.goalSelector.addGoal(5, new MeleeAttackGoal(this, 1.0D, true));
-        this.goalSelector.addGoal(7, new BreedGoal(this, 1.0D));
-        this.goalSelector.addGoal(8, new WaterAvoidingRandomStrollGoal(this, 1.0D));
-        this.goalSelector.addGoal(10, new LookAtPlayerGoal(this, Player.class, 8.0F));
-        this.goalSelector.addGoal(10, new RandomLookAroundGoal(this));
-        this.targetSelector.addGoal(3, (new HurtByTargetGoal(this)).setAlertOthers());
-        this.targetSelector.addGoal(4, new NearestAttackableTargetGoal<>(this, Player.class, true));
+        this.goalSelector.addGoal(1, new LeapAtTargetGoal(this, 0.4F));
+        this.goalSelector.addGoal(2, new MeleeAttackGoal(this, 1.0D, true));
+        this.goalSelector.addGoal(3, new BreedGoal(this, 1.0D));
+        this.goalSelector.addGoal(4, new WaterAvoidingRandomStrollGoal(this, 1.0D));
+        this.goalSelector.addGoal(5, new LookAtPlayerGoal(this, Player.class, 8.0F));
+        this.goalSelector.addGoal(6, new RandomLookAroundGoal(this));
+        this.targetSelector.addGoal(7, (new HurtByTargetGoal(this)).setAlertOthers());
+        this.targetSelector.addGoal(8, new NearestAttackableTargetGoal<>(this, Player.class, true));
+        this.targetSelector.addGoal(9, new NearestAttackableTargetGoal<>(this, Animal.class, false, PREY_SELECTOR));
     }
 
     @Override
@@ -51,11 +69,56 @@ public class LivingBoat extends Animal { ;
         }
     }
 
+    @Override
+    public void thunderHit(ServerLevel level, LightningBolt lightning) {
+        this.remove(RemovalReason.DISCARDED);
+        level.setBlockAndUpdate(this.getOnPos().above(), ChristmasBlocks.boatPortal.get().defaultBlockState());
+    }
+
+    @Override
+    public boolean doHurtTarget(Entity entity) {
+        boolean entityHurt = super.doHurtTarget(entity);
+        if (entityHurt) {
+            BlockPos pos = entity.getOnPos().above();
+            BlockState spruceState = Blocks.SPRUCE_PLANKS.defaultBlockState();
+
+            //TODO placeBoat(pos, spruceState);
+        }
+
+        return entityHurt;
+    }
+
+    private void placeBoat(BlockPos initialPos, BlockState buildingMaterial) {
+        level.setBlockAndUpdate(initialPos.east().east(), buildingMaterial);
+        level.setBlockAndUpdate(initialPos.west().west(), buildingMaterial);
+        level.setBlockAndUpdate(initialPos.north().north(), buildingMaterial);
+        level.setBlockAndUpdate(initialPos.south().south(), buildingMaterial);
+    }
+
+    @Override
+    protected SoundEvent getHurtSound(DamageSource p_33814_) {
+        return SoundEvents.WOOD_HIT;
+    }
+
+    @Override
+    protected SoundEvent getDeathSound() {
+        return SoundEvents.WOOD_BREAK;
+    }
+
     public static AttributeSupplier.Builder getExampleAttributes() {
         return Animal.createMobAttributes()
                 .add(ForgeMod.STEP_HEIGHT_ADDITION.get(), 2.0F)
                 .add(Attributes.MOVEMENT_SPEED, 0.45F)
                 .add(Attributes.ATTACK_DAMAGE, 6.0F)
                 .add(Attributes.MAX_HEALTH, 40.0F);
+    }
+
+    /**@Override
+    public boolean canBeLeashed(Player player) {
+        return false;
+    }*/
+
+    public static boolean canSpawn(EntityType<? extends Animal> entityType, LevelAccessor accessor, MobSpawnType spawnType, BlockPos pos, RandomSource source) {
+        return Animal.checkAnimalSpawnRules(entityType, accessor, spawnType, pos, source) || accessor.dimensionType() == BoatDimension.boatType;
     }
 }
