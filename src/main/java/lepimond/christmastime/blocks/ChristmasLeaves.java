@@ -23,6 +23,4 @@ public class ChristmasLeaves extends LeavesBlock {
     protected boolean decaying(BlockState blockState) {
         return false;
     }
-
-
 }

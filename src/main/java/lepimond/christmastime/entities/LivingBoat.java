@@ -2,6 +2,7 @@ package lepimond.christmastime.entities;
 
 import lepimond.christmastime.dimensions.BoatDimension;
 import lepimond.christmastime.registry.ChristmasBlocks;
+import lepimond.christmastime.registry.ChristmasDimensions;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
@@ -16,6 +17,7 @@ import net.minecraft.world.entity.ai.goal.target.*;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.vehicle.Boat;
+import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Blocks;
@@ -70,8 +72,22 @@ public class LivingBoat extends Animal {
     }
 
     @Override
+    public void die(DamageSource deathCause) {
+        super.die(deathCause);
+
+        if (this.level.dimension() == ChristmasDimensions.boatDimensionKey) {
+            this.level.explode(this, this.getX(), this.getY(), this.getZ(), 3.0F, Explosion.BlockInteraction.BREAK);
+            spawnPortal();
+        }
+    }
+
+    @Override
     public void thunderHit(ServerLevel level, LightningBolt lightning) {
         this.remove(RemovalReason.DISCARDED);
+        spawnPortal();
+    }
+
+    private void spawnPortal() {
         level.setBlockAndUpdate(this.getOnPos().above(), ChristmasBlocks.boatPortal.get().defaultBlockState());
     }
 
