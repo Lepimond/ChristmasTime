@@ -12,6 +12,8 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.ai.targeting.TargetingConditions;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
@@ -47,34 +49,45 @@ public class BoatPortal extends Block {
 
     @Override
     public void animateTick(BlockState state, Level worldIn, BlockPos pos, RandomSource rand) {
-        float angle = 0;
         float circleRadius = 2;
         int numberOfDots = 80;
 
         //The actual speed is proportional to 1/rotationSpeed
         float rotationSpeed = 300.0F;
 
+        addParticleCircles(worldIn, pos, circleRadius, numberOfDots, rotationSpeed);
+
+        Player nearestPlayer = worldIn.getNearestPlayer(TargetingConditions.forNonCombat(), pos.getX(), pos.getY(), pos.getZ());
+        if (nearestPlayer != null) {
+            BlockPos nearestPos = new BlockPos(nearestPlayer.getX(), nearestPlayer.getY() + 1.5D, nearestPlayer.getZ());
+            addParticleCircles(worldIn, nearestPos, circleRadius, numberOfDots, rotationSpeed);
+        }
+    }
+
+    private void addParticleCircles(Level worldIn, BlockPos pos, float radius, int numberOfDots, float rotationSpeed) {
+        float angle = 0;
+
         for(int i = 0; i < numberOfDots; i++) {
             angle += Mth.TWO_PI / numberOfDots;
 
             float rotationAngle = (worldIn.getGameTime() / rotationSpeed) % Mth.TWO_PI;
 
-            float x = circleRadius * Mth.cos(angle);
+            float x = radius * Mth.cos(angle);
 
-            double d0 = (double)pos.getX() + 0.5F + Mth.sin(angle) * circleRadius;
+            double d0 = (double)pos.getX() + 0.5F + Mth.sin(angle) * radius;
             double d1 = (double)pos.getY() + 0.5F + x * Mth.sin(rotationAngle);
-            double d2 = (double)pos.getZ() + 0.5F + Mth.cos(angle) * circleRadius - Mth.sin(rotationAngle / 2) * Mth.sin(rotationAngle / 2) * x * 2;
+            double d2 = (double)pos.getZ() + 0.5F + Mth.cos(angle) * radius - Mth.sin(rotationAngle / 2) * Mth.sin(rotationAngle / 2) * x * 2;
 
             double d3 = 0.0D;
             double d4 = 0.0D;
             double d5 = 0.0D;
 
-            float secondCircleRadius = circleRadius / 1.3F;
-            float secondX = secondCircleRadius * Mth.cos(angle);
+            float secondRadius = radius / 1.3F;
+            float secondX = secondRadius * Mth.cos(angle);
 
-            double d0_2 = (double)pos.getX() + 0.5F + Mth.cos(angle) * secondCircleRadius - Mth.sin(rotationAngle / 2) * Mth.sin(rotationAngle / 2) * secondX * 2;
+            double d0_2 = (double)pos.getX() + 0.5F + Mth.cos(angle) * secondRadius - Mth.sin(rotationAngle / 2) * Mth.sin(rotationAngle / 2) * secondX * 2;
             double d1_2 = (double)pos.getY() + 0.5F + secondX * Mth.sin(rotationAngle);
-            double d2_2 = (double)pos.getZ() + 0.5F + Mth.sin(angle) * secondCircleRadius;
+            double d2_2 = (double)pos.getZ() + 0.5F + Mth.sin(angle) * secondRadius;
 
             double d3_2 = 0.0D;
             double d4_2 = 0.0D;

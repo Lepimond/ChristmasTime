@@ -18,7 +18,6 @@ public class BoatPortalParticle extends PortalParticle {
         this.yo = this.y;
         this.zo = this.z;
         if (this.age++ >= this.lifetime) {
-            System.out.println(this.lifetime);
             this.remove();
         } else {
             float f = (float)this.age / (float)this.lifetime;
