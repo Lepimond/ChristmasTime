@@ -18,7 +18,7 @@ import net.minecraft.world.level.material.Material;
 public class BoatPortal extends Block {
 
     public BoatPortal() {
-        super(Properties.of(Material.PORTAL).noCollission());
+        super(Properties.of(Material.PORTAL).noCollission().randomTicks());
     }
 
     @Override
@@ -41,6 +41,15 @@ public class BoatPortal extends Block {
                 }
             }
         }
+    }
+
+    @Override
+    public void randomTick(BlockState state, ServerLevel worldIn, BlockPos pos, RandomSource rand) {
+        super.tick(state, worldIn, pos, rand);
+        if (worldIn.dimension() == ChristmasDimensions.boatDimensionKey)
+            return;
+
+        worldIn.removeBlock(pos, false);
     }
 
     @Override

@@ -30,6 +30,9 @@ import java.util.function.Predicate;
 
 public class LivingBoat extends Animal {
 
+    //The chance is 1/PORTAL_SPAWN_CHANCE
+    private final int PORTAL_SPAWN_CHANCE = 6;
+
     public static final Predicate<LivingEntity> PREY_SELECTOR = (p_30437_) -> {
         EntityType<?> entitytype = p_30437_.getType();
         return entitytype == EntityType.GOAT;
@@ -89,26 +92,20 @@ public class LivingBoat extends Animal {
 
     private void spawnPortal() {
         level.setBlockAndUpdate(this.getOnPos().above(), ChristmasBlocks.boatPortal.get().defaultBlockState());
-    }
+        double x = this.getX();
+        double y = this.getY();
+        double z = this.getZ();
 
-    @Override
-    public boolean doHurtTarget(Entity entity) {
-        boolean entityHurt = super.doHurtTarget(entity);
-        if (entityHurt) {
-            BlockPos pos = entity.getOnPos().above();
-            BlockState spruceState = Blocks.SPRUCE_PLANKS.defaultBlockState();
+        for (int i = -2; i <= 2; i++) {
+            for (int j = -2; j <= 2; j++) {
+                for (int k = -2; k <= 2; k++) {
+                    if (this.random.nextInt(PORTAL_SPAWN_CHANCE) == 0) {
+                        level.setBlockAndUpdate(new BlockPos(x + i, y + j, z + k), ChristmasBlocks.boatPortal.get().defaultBlockState());
+                    }
 
-            //TODO placeBoat(pos, spruceState);
+                }
+            }
         }
-
-        return entityHurt;
-    }
-
-    private void placeBoat(BlockPos initialPos, BlockState buildingMaterial) {
-        level.setBlockAndUpdate(initialPos.east().east(), buildingMaterial);
-        level.setBlockAndUpdate(initialPos.west().west(), buildingMaterial);
-        level.setBlockAndUpdate(initialPos.north().north(), buildingMaterial);
-        level.setBlockAndUpdate(initialPos.south().south(), buildingMaterial);
     }
 
     @Override
@@ -129,10 +126,10 @@ public class LivingBoat extends Animal {
                 .add(Attributes.MAX_HEALTH, 40.0F);
     }
 
-    /**@Override
+    @Override
     public boolean canBeLeashed(Player player) {
         return false;
-    }*/
+    }
 
     public static boolean canSpawn(EntityType<? extends Animal> entityType, LevelAccessor accessor, MobSpawnType spawnType, BlockPos pos, RandomSource source) {
         return Animal.checkAnimalSpawnRules(entityType, accessor, spawnType, pos, source) || accessor.dimensionType() == BoatDimension.boatType;
