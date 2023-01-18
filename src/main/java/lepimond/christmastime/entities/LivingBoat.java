@@ -28,9 +28,6 @@ import java.util.function.Predicate;
 
 public class LivingBoat extends Animal {
 
-    //The chance is 1/PORTAL_SPAWN_CHANCE
-    private final int PORTAL_SPAWN_CHANCE = 6;
-
     public static final Predicate<LivingEntity> PREY_SELECTOR = (p_30437_) -> {
         EntityType<?> entitytype = p_30437_.getType();
         return entitytype == EntityType.GOAT;
@@ -89,21 +86,7 @@ public class LivingBoat extends Animal {
     }
 
     private void spawnPortal() {
-        level.setBlockAndUpdate(this.getOnPos().above(), ChristmasBlocks.boatPortal.get().defaultBlockState());
-        double x = this.getX();
-        double y = this.getY();
-        double z = this.getZ();
-
-        for (int i = -2; i <= 2; i++) {
-            for (int j = -2; j <= 2; j++) {
-                for (int k = -2; k <= 2; k++) {
-                    if (this.random.nextInt(PORTAL_SPAWN_CHANCE) == 0) {
-                        level.setBlockAndUpdate(new BlockPos(x + i, y + j, z + k), ChristmasBlocks.boatPortal.get().defaultBlockState());
-                    }
-
-                }
-            }
-        }
+        level.setBlockAndUpdate(this.getOnPos().above().above(), ChristmasBlocks.boatPortal.get().defaultBlockState());
     }
 
     @Override

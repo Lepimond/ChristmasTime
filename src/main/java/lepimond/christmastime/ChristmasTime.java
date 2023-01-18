@@ -4,11 +4,13 @@ import com.mojang.logging.LogUtils;
 import lepimond.christmastime.entities.LivingBoat;
 import lepimond.christmastime.entities.client.model.LivingBoatModel;
 import lepimond.christmastime.entities.client.renderer.LivingBoatRenderer;
+import lepimond.christmastime.particles.BoatPortalParticle;
 import lepimond.christmastime.registry.*;
 import lepimond.christmastime.entities.client.model.LeggedBoatModel;
 import lepimond.christmastime.entities.client.renderer.LeggedBoatRenderer;
 import lepimond.christmastime.worldgen.ChristmasBiomeKeys;
 import lepimond.christmastime.worldgen.biomes.BoatBiome;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.*;
@@ -19,6 +21,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.portal.PortalInfo;
 import net.minecraftforge.client.event.EntityRenderersEvent;
+import net.minecraftforge.client.event.RegisterParticleProvidersEvent;
 import net.minecraftforge.common.BiomeManager;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
@@ -43,6 +46,7 @@ public class ChristmasTime {
         ChristmasBlocks.BLOCKS.register(eventBus);
         ChristmasEntities.ENTITY_TYPES.register(eventBus);
         ChristmasSounds.SOUNDS.register(eventBus);
+        ChristmasParticles.PARTICLE_TYPES.register(eventBus);
 
         MinecraftForge.EVENT_BUS.register(this);
 
@@ -72,6 +76,12 @@ public class ChristmasTime {
         public static void onClientSetup(FMLClientSetupEvent event) {
             //Without that, the crop just renders as completely black
             ItemBlockRenderTypes.setRenderLayer(ChristmasBlocks.cookieCrop.get(), RenderType.cutout());
+        }
+
+        @SubscribeEvent
+        public static void registerParticleProviders(RegisterParticleProvidersEvent event) {
+            Minecraft.getInstance().particleEngine.register(ChristmasParticles.boatParticle.get(),
+                    BoatPortalParticle.BoatPortalProvider::new);
         }
 
         //Registers which Renderer classes belong to which entities
