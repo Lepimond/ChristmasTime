@@ -1,6 +1,6 @@
 {
-  "parent": "minecraft:block/cube_all",
+  "parent": "minecraft:block/spruce_leaves",
   "textures": {
-    "all": "minecraft:block/spruce_planks"
+    "all": "christmastime:block/christmas_leaves"
   }
 }
