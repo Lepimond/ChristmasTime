@@ -11,6 +11,8 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.player.Player;
@@ -18,11 +20,17 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
+import net.minecraft.world.phys.AABB;
+
+import java.util.List;
 
 public class BoatPortal extends Block {
 
+    private float circleMagicDistance;
+
     public BoatPortal() {
         super(Properties.of(Material.PORTAL).noCollission().randomTicks());
+        circleMagicDistance = 10;
     }
 
     @Override
@@ -57,10 +65,15 @@ public class BoatPortal extends Block {
 
         addParticleCircles(worldIn, pos, circleRadius, numberOfDots, rotationSpeed);
 
-        Player nearestPlayer = worldIn.getNearestPlayer(TargetingConditions.forNonCombat(), pos.getX(), pos.getY(), pos.getZ());
-        if (nearestPlayer != null) {
-            BlockPos nearestPos = new BlockPos(nearestPlayer.getX(), nearestPlayer.getY() + 1.5D, nearestPlayer.getZ());
-            addParticleCircles(worldIn, nearestPos, circleRadius, numberOfDots, rotationSpeed);
+        for (Player player: worldIn.players()) {
+            if (player != null) {
+                if (player.distanceToSqr(pos.getX(), pos.getY(), pos.getZ()) < Mth.square(circleMagicDistance)) {
+                    BlockPos playerPos = new BlockPos(player.getX(), player.getY() + 1.5D, player.getZ());
+                    addParticleCircles(worldIn, playerPos, circleRadius, numberOfDots, rotationSpeed);
+
+                    player.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 100));
+                }
+            }
         }
     }
 
@@ -103,5 +116,9 @@ public class BoatPortal extends Block {
             worldIn.addParticle(particles, d0, d1, d2, d3, d4, d5);
             worldIn.addParticle(particles, d0_2, d1_2, d2_2, d3_2, d4_2, d5_2);
         }
+    }
+
+    public void setCircleDistance(float dist) {
+        this.circleMagicDistance = dist;
     }
 }
