@@ -2,7 +2,9 @@ package lepimond.christmastime;
 
 import com.mojang.logging.LogUtils;
 import lepimond.christmastime.entities.LivingBoat;
+import lepimond.christmastime.entities.client.model.BlinkEffectModel;
 import lepimond.christmastime.entities.client.model.LivingBoatModel;
+import lepimond.christmastime.entities.client.renderer.BlinkEffectRenderer;
 import lepimond.christmastime.entities.client.renderer.LivingBoatRenderer;
 import lepimond.christmastime.particles.BoatPortalParticle;
 import lepimond.christmastime.registry.*;
@@ -90,12 +92,14 @@ public class ChristmasTime {
             event.registerEntityRenderer(ChristmasEntities.leggedBoat.get(), LeggedBoatRenderer::new);
             event.registerEntityRenderer(ChristmasEntities.livingBoat.get(), LivingBoatRenderer::new);
             event.registerEntityRenderer(ChristmasEntities.gunSnowball.get(), ThrownItemRenderer::new);
+            event.registerEntityRenderer(ChristmasEntities.blinkEffect.get(), BlinkEffectRenderer::new);
         }
 
         @SubscribeEvent
         public static void registerLayerDefinitions(EntityRenderersEvent.RegisterLayerDefinitions event) {
             event.registerLayerDefinition(LeggedBoatModel.LAYER_LOCATION, LeggedBoatModel::createBodyModel);
             event.registerLayerDefinition(LivingBoatModel.LAYER_LOCATION, LivingBoatModel::createBodyModel);
+            event.registerLayerDefinition(BlinkEffectModel.LAYER_LOCATION, BlinkEffectModel::createBodyLayer);
         }
     }
 }

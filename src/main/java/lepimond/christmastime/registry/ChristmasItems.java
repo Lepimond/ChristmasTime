@@ -41,6 +41,7 @@ public class ChristmasItems {
     public static final RegistryObject<Item> boatSpawnEgg = ITEMS.register("living_boat_spawn_egg",
             () -> new ForgeSpawnEggItem(ChristmasEntities.livingBoat, 0x5B3315, 0xBC987E, standardProps().stacksTo(16)));
     public static final RegistryObject<Item> boatRemains = ITEMS.register("boat_remains", BoatRemainsItem::new);
+    public static final RegistryObject<Item> blink = ITEMS.register("blink", BlinkItem::new);
 
     public static Item.Properties standardProps() {
         return new Item.Properties().tab(ChristmasCreativeTabs.CHRISTMAS_TAB);
