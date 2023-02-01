@@ -2,9 +2,12 @@ package lepimond.christmastime.entities;
 
 import lepimond.christmastime.items.BlinkItem;
 import lepimond.christmastime.registry.ChristmasEntities;
+import net.minecraft.client.resources.sounds.Sound;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Player;

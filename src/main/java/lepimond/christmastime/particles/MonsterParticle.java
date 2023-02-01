@@ -6,8 +6,8 @@ import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-public class BoatPortalParticle extends PortalParticle {
-    protected BoatPortalParticle(ClientLevel worldIn, double x, double y, double z, double xd, double yd, double zd) {
+public class MonsterParticle extends PortalParticle {
+    protected MonsterParticle(ClientLevel worldIn, double x, double y, double z, double xd, double yd, double zd) {
         super(worldIn, x, y, z, xd, yd, zd);
 
         this.lifetime = 50;
@@ -29,15 +29,15 @@ public class BoatPortalParticle extends PortalParticle {
     }
 
     @OnlyIn(Dist.CLIENT)
-    public static class BoatPortalProvider implements ParticleProvider<SimpleParticleType> {
+    public static class MonsterParticleProvider implements ParticleProvider<SimpleParticleType> {
         private final SpriteSet sprite;
 
-        public BoatPortalProvider(SpriteSet sprite) {
+        public MonsterParticleProvider(SpriteSet sprite) {
             this.sprite = sprite;
         }
 
         public Particle createParticle(SimpleParticleType type, ClientLevel worldIn, double x, double y, double z, double xd, double yd, double zd) {
-            BoatPortalParticle particle = new BoatPortalParticle(worldIn, x, y, z, xd, yd, zd);
+            MonsterParticle particle = new MonsterParticle(worldIn, x, y, z, xd, yd, zd);
             particle.pickSprite(this.sprite);
             return particle;
         }

@@ -12,4 +12,5 @@ public class ChristmasParticles {
             DeferredRegister.create(ForgeRegistries.PARTICLE_TYPES, ChristmasTime.MODID);
 
     public static final RegistryObject<SimpleParticleType> boatParticle = PARTICLE_TYPES.register("boat_particle", () -> new SimpleParticleType(true));
+    public static final RegistryObject<SimpleParticleType> monsterParticle = PARTICLE_TYPES.register("monster_particle", () -> new SimpleParticleType(true));
 }

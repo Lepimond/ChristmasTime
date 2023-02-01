@@ -3,6 +3,7 @@ package lepimond.christmastime.items;
 import lepimond.christmastime.entities.BlinkEffect;
 import lepimond.christmastime.registry.ChristmasItems;
 import net.minecraft.core.BlockPos;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.Entity;
@@ -16,7 +17,7 @@ public class BlinkItem extends Item {
     private BlinkEffect blinkEntity;
 
     public BlinkItem() {
-        super(ChristmasItems.standardProps());
+        super(ChristmasItems.standardProps().durability(500));
     }
 
     public InteractionResultHolder<ItemStack> use(Level worldIn, Player player, InteractionHand hand) {
@@ -26,11 +27,16 @@ public class BlinkItem extends Item {
 
         if (blinkEntity == null) {
             blinkEntity = new BlinkEffect(worldIn, player);
+            player.playSound(SoundEvents.ENDERMAN_AMBIENT, 1.0F, 1.0F);
             worldIn.addFreshEntity(blinkEntity);
         } else {
             player.teleportTo(blinkEntity.getX(), blinkEntity.getY(), blinkEntity.getZ());
+            player.playSound(SoundEvents.ENDERMAN_TELEPORT, 1.0F, 1.0F);
             blinkEntity.remove(Entity.RemovalReason.DISCARDED);
             blinkEntity = null;
+
+            ItemStack blink = player.getItemInHand(hand);
+            blink.setDamageValue(blink.getDamageValue() + 1);
         }
 
         return InteractionResultHolder.sidedSuccess(new ItemStack(this), worldIn.isClientSide());

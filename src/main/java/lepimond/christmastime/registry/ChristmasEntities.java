@@ -1,10 +1,7 @@
 package lepimond.christmastime.registry;
 
 import lepimond.christmastime.ChristmasTime;
-import lepimond.christmastime.entities.BlinkEffect;
-import lepimond.christmastime.entities.GunSnowball;
-import lepimond.christmastime.entities.LeggedBoat;
-import lepimond.christmastime.entities.LivingBoat;
+import lepimond.christmastime.entities.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
@@ -38,4 +35,9 @@ public class ChristmasEntities {
             () -> EntityType.Builder.<BlinkEffect>of(BlinkEffect::new, MobCategory.MISC)
                     .sized(0.95F, 2.45F)
                     .build(new ResourceLocation(ChristmasTime.MODID, "blink_effect").toString()));
+
+    public static final RegistryObject<EntityType<ParticleMonster>> particleMonster = ENTITY_TYPES.register("particle_monster",
+            () -> EntityType.Builder.<ParticleMonster>of(ParticleMonster::new, MobCategory.CREATURE)
+                    .sized(0.95F, 2.45F)
+                    .build(new ResourceLocation(ChristmasTime.MODID, "particle_monster").toString()));
 }

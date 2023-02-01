@@ -102,13 +102,8 @@
         },
         {
           "type": "minecraft:item",
-          "name": "christmastime:blink",
-          "weight": 2
-        },
-        {
-          "type": "minecraft:item",
           "name": "minecraft:cookie",
-          "weight": 15
+          "weight": 17
         }
       ],
       "rolls": 1.0
