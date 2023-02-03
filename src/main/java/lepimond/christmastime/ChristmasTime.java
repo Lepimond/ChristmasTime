@@ -24,6 +24,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.SpawnPlacements;
+import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.monster.Zombie;
 import net.minecraft.world.level.Level;
@@ -68,7 +69,7 @@ public class ChristmasTime {
         public static void onCommonSetup(FMLCommonSetupEvent event) {
             event.enqueueWork(() -> {
                 SpawnPlacements.register(ChristmasEntities.livingBoat.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.WORLD_SURFACE, LivingBoat::canSpawn);
-                SpawnPlacements.register(ChristmasEntities.particleMonster.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.WORLD_SURFACE, Monster::checkMonsterSpawnRules);
+                SpawnPlacements.register(ChristmasEntities.particleMonster.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Monster::checkMonsterSpawnRules);
                 BiomeManager.addAdditionalOverworldBiomes(ChristmasBiomeKeys.boatBiome);
             });
         }
