@@ -1,8 +1,13 @@
 package lepimond.christmastime.items;
 
+import lepimond.christmastime.capability.PlayerManaProvider;
+import lepimond.christmastime.client.ClientManaData;
 import lepimond.christmastime.entities.BlinkEffect;
+import lepimond.christmastime.networking.ManaDataSyncS2CPacket;
 import lepimond.christmastime.registry.ChristmasItems;
+import lepimond.christmastime.registry.ChristmasMessages;
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
@@ -25,6 +30,9 @@ public class BlinkItem extends Item {
         if (worldIn.isClientSide())
             return InteractionResultHolder.fail(new ItemStack(this));
 
+        if (ClientManaData.getMana() == 0)
+            return InteractionResultHolder.fail(new ItemStack(this));
+
         if (blinkEntity == null) {
             blinkEntity = new BlinkEffect(worldIn, player);
             player.playSound(SoundEvents.ENDERMAN_AMBIENT, 1.0F, 1.0F);
@@ -34,6 +42,11 @@ public class BlinkItem extends Item {
             player.playSound(SoundEvents.ENDERMAN_TELEPORT, 1.0F, 1.0F);
             blinkEntity.remove(Entity.RemovalReason.DISCARDED);
             blinkEntity = null;
+
+            player.getCapability(PlayerManaProvider.PLAYER_MANA).ifPresent(mana -> {
+                mana.subMana(1);
+                ChristmasMessages.sendToPlayer(new ManaDataSyncS2CPacket(mana.getMana()), (ServerPlayer) player);
+            });
 
             ItemStack blink = player.getItemInHand(hand);
             blink.setDamageValue(blink.getDamageValue() + 1);

@@ -1,6 +1,9 @@
 package lepimond.christmastime;
 
 import com.mojang.logging.LogUtils;
+import lepimond.christmastime.capability.PlayerMana;
+import lepimond.christmastime.capability.PlayerManaProvider;
+import lepimond.christmastime.client.ManaHudOverlay;
 import lepimond.christmastime.entities.LivingBoat;
 import lepimond.christmastime.entities.ParticleMonster;
 import lepimond.christmastime.entities.client.model.BlinkEffectModel;
@@ -20,6 +23,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.*;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.Mob;
@@ -27,15 +31,20 @@ import net.minecraft.world.entity.SpawnPlacements;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.monster.Zombie;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.portal.PortalInfo;
 import net.minecraftforge.client.event.EntityRenderersEvent;
+import net.minecraftforge.client.event.RegisterGuiOverlaysEvent;
 import net.minecraftforge.client.event.RegisterParticleProvidersEvent;
 import net.minecraftforge.common.BiomeManager;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
+import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.event.entity.EntityTravelToDimensionEvent;
+import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -57,13 +66,15 @@ public class ChristmasTime {
         ChristmasEntities.ENTITY_TYPES.register(eventBus);
         ChristmasSounds.SOUNDS.register(eventBus);
         ChristmasParticles.PARTICLE_TYPES.register(eventBus);
+        ChristmasBlockEntities.BLOCK_ENTITY_TYPES.register(eventBus);
+        ChristmasMessages.register();
 
         MinecraftForge.EVENT_BUS.register(this);
 
         LOGGER.debug("Christmas Time welcomes you!");
     }
 
-    @Mod.EventBusSubscriber(modid = MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
+    @Mod.EventBusSubscriber(modid = MODID)
     public static class CommonModEvents {
         @SubscribeEvent
         public static void onCommonSetup(FMLCommonSetupEvent event) {
@@ -78,6 +89,31 @@ public class ChristmasTime {
         public static void entityAttributes(EntityAttributeCreationEvent event) {
             event.put(ChristmasEntities.livingBoat.get(), LivingBoat.getExampleAttributes().build());
             event.put(ChristmasEntities.particleMonster.get(), Zombie.createAttributes().build());
+        }
+
+        @SubscribeEvent
+        public static void onAttachCapabilitiesPlayer(AttachCapabilitiesEvent<Entity> event) {
+            if (event.getObject() instanceof Player) {
+                if (!event.getObject().getCapability(PlayerManaProvider.PLAYER_MANA).isPresent()) {
+                    event.addCapability(new ResourceLocation(ChristmasTime.MODID, "properties"), new PlayerManaProvider());
+                }
+            }
+        }
+
+        @SubscribeEvent
+        public static void onPlayerCloned(PlayerEvent.Clone event) {
+            if (event.isWasDeath()) {
+                event.getOriginal().getCapability(PlayerManaProvider.PLAYER_MANA).ifPresent(oldStore -> {
+                    event.getOriginal().getCapability(PlayerManaProvider.PLAYER_MANA).ifPresent(newStore -> {
+                        newStore.copyFrom(oldStore);
+                    });
+                });
+            }
+        }
+
+        @SubscribeEvent
+        public static void onRegisterCapabilities(RegisterCapabilitiesEvent event) {
+            event.register(PlayerMana.class);
         }
     }
 
@@ -113,6 +149,11 @@ public class ChristmasTime {
             event.registerLayerDefinition(LivingBoatModel.LAYER_LOCATION, LivingBoatModel::createBodyModel);
             event.registerLayerDefinition(BlinkEffectModel.LAYER_LOCATION, BlinkEffectModel::createBodyLayer);
             event.registerLayerDefinition(ParticleMonsterModel.LAYER_LOCATION, ParticleMonsterModel::createBodyModel);
+        }
+
+        @SubscribeEvent
+        public static void registerGuiOverlays(RegisterGuiOverlaysEvent event) {
+            event.registerAboveAll("mana", ManaHudOverlay.HUD_MANA);
         }
     }
 }
