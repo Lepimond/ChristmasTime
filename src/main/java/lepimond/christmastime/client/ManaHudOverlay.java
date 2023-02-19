@@ -2,13 +2,20 @@ package lepimond.christmastime.client;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import lepimond.christmastime.ChristmasTime;
+import lepimond.christmastime.items.ManaChanging;
 import net.minecraft.client.gui.GuiComponent;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.client.gui.overlay.IGuiOverlay;
 
 public class ManaHudOverlay {
     public static final IGuiOverlay HUD_MANA = ((gui, poseStack, partialTick, screenWidth, screenHeight) -> {
+        Player player = gui.getMinecraft().player;
+        if (!(player.getItemInHand(player.getUsedItemHand()).getItem() instanceof ManaChanging)) {
+            return;
+        }
+
         int x = 20;
         int y = 20;
         int width = screenWidth / 10;

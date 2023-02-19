@@ -18,7 +18,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 
-public class BlinkItem extends Item {
+public class BlinkItem extends Item implements ManaChanging {
     private BlinkEffect blinkEntity;
 
     public BlinkItem() {
