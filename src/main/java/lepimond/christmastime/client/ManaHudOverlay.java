@@ -8,10 +8,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.client.gui.overlay.IGuiOverlay;
 
 public class ManaHudOverlay {
-    private static final ResourceLocation FILLED_MANA = new ResourceLocation(ChristmasTime.MODID, "textures/gui/filled_mana.png");
-    private static final ResourceLocation HALF_FILLED_MANA = new ResourceLocation(ChristmasTime.MODID, "");
-    private static final ResourceLocation EMPTY_MANA = new ResourceLocation(ChristmasTime.MODID, "textures/gui/empty_mana.png");
-
     public static final IGuiOverlay HUD_MANA = ((gui, poseStack, partialTick, screenWidth, screenHeight) -> {
         int x = 20;
         int y = 20;
@@ -20,13 +16,7 @@ public class ManaHudOverlay {
 
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-
-        if (ClientManaData.getMana() > 0) {
-            RenderSystem.setShaderTexture(0, FILLED_MANA);
-        } else {
-            RenderSystem.setShaderTexture(0, EMPTY_MANA);
-        }
-
+        RenderSystem.setShaderTexture(0 , new ResourceLocation(ChristmasTime.MODID, "textures/gui/mana_" + ClientManaData.getMana() + ".png"));
         GuiComponent.blit(poseStack, x, y, 0, 0, width, height, width, height);
     });
 }

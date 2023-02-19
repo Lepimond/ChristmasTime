@@ -5,7 +5,7 @@ import net.minecraft.nbt.CompoundTag;
 public class PlayerMana {
     private int mana;
     private final int MIN_MANA = 0;
-    private final int MAX_MANA = 2;
+    private final int MAX_MANA = 8;
 
     public int getMana() {
         return mana;

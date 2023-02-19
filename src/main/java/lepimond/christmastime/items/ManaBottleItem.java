@@ -26,7 +26,7 @@ public class ManaBottleItem extends Item {
 
         player.getItemInHand(hand).shrink(1);
         player.getCapability(PlayerManaProvider.PLAYER_MANA).ifPresent(mana -> {
-            mana.addMana(2);
+            mana.addMana(5);
             ChristmasMessages.sendToPlayer(new ManaDataSyncS2CPacket(mana.getMana()), (ServerPlayer) player);
         });
         return InteractionResultHolder.pass(player.getItemInHand(hand));
